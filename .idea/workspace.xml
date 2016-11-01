@@ -2,13 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b556773b-f33d-4296-81f9-9b6038c132e5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Dic_1/mongo_queue.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/58_city.iml" afterPath="$PROJECT_DIR$/.idea/58_city.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Dic_1/link_crawler.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Dic_1/master.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Dic_1/mongo_download_queue.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Dic_1/mongo_parse_queue.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Dic_1/parser.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Dic_1/process_crawler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dic_1/downloader.py" afterPath="$PROJECT_DIR$/Dic_1/downloader.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dic_1/url_cache.py" afterPath="$PROJECT_DIR$/Dic_1/url_cache.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Dic_1/mongo_cache.py" afterPath="$PROJECT_DIR$/Dic_1/html_cache.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Dic_1/mongo_queue.py" afterPath="$PROJECT_DIR$/Dic_1/mongo_queue.py" />
     </list>
     <ignored path="58_city.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,22 +33,11 @@
       <file leaf-file-name="downloader.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dic_1/downloader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+            <state relative-caret-position="1387">
+              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
               <folding>
-                <element signature="e#42#53#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="html_cache.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Dic_1/html_cache.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="40" column="42" selection-start-line="40" selection-start-column="42" selection-end-line="40" selection-end-column="42" />
-              <folding>
-                <element signature="e#72#83#0" expanded="true" />
+                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#2525#3241#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -55,8 +46,8 @@
       <file leaf-file-name="url_cache.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dic_1/url_cache.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
+            <state relative-caret-position="529">
+              <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
               <folding>
                 <element signature="e#72#83#0" expanded="true" />
               </folding>
@@ -64,14 +55,83 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mongo_queue.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Dic_1/mongo_queue.py">
+      <file leaf-file-name="mongo_download_queue.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dic_1/mongo_download_queue.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+            <state relative-caret-position="1628">
+              <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
-                <element signature="e#105#814#1" expanded="false" />
+                <element signature="e#113#822#1" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mongo_queue.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dic_1/mongo_queue.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mongo_parse_queue.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Dic_1/mongo_parse_queue.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="550">
+              <caret line="46" column="46" selection-start-line="46" selection-start-column="46" selection-end-line="46" selection-end-column="46" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+                <element signature="e#110#819#1" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parser.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dic_1/parser.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="master.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dic_1/master.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+              <folding>
+                <element signature="e#25#68#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="process_crawler.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dic_1/process_crawler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="550">
+              <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="link_crawler.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Dic_1/link_crawler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -96,11 +156,17 @@
         <option value="$PROJECT_DIR$/Dic_1/mongo_cache.py" />
         <option value="$PROJECT_DIR$/test/cache_test.py" />
         <option value="$PROJECT_DIR$/Dic_1/queue_manager.py" />
-        <option value="$PROJECT_DIR$/Dic_1/test.py" />
         <option value="$PROJECT_DIR$/Dic_1/url_cache.py" />
         <option value="$PROJECT_DIR$/Dic_1/html_cache.py" />
-        <option value="$PROJECT_DIR$/Dic_1/downloader.py" />
+        <option value="$PROJECT_DIR$/Dic_1/test.py" />
+        <option value="$PROJECT_DIR$/Dic_1/mongo_download_queue.py" />
+        <option value="$PROJECT_DIR$/Dic_1/mongo_parse_queue.py" />
         <option value="$PROJECT_DIR$/Dic_1/mongo_queue.py" />
+        <option value="$PROJECT_DIR$/Dic_1/parser.py" />
+        <option value="$PROJECT_DIR$/Dic_1/master.py" />
+        <option value="$PROJECT_DIR$/Dic_1/downloader.py" />
+        <option value="$PROJECT_DIR$/Dic_1/link_crawler.py" />
+        <option value="$PROJECT_DIR$/Dic_1/process_crawler.py" />
       </list>
     </option>
   </component>
@@ -375,9 +441,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.096354164" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.096354164" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -460,7 +526,8 @@
         <state relative-caret-position="440">
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
-            <element signature="e#42#53#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#2525#3241#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -490,7 +557,8 @@
         <state relative-caret-position="682">
           <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding>
-            <element signature="e#42#53#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#2525#3241#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -528,7 +596,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#42#53#0" expanded="true" />
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#2525#3241#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -555,32 +624,90 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dic_1/downloader.py">
+    <entry file="file://$PROJECT_DIR$/Dic_1/html_cache.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
+        <state relative-caret-position="550">
+          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
           <folding>
-            <element signature="e#42#53#0" expanded="true" />
+            <element signature="e#72#83#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Dic_1/url_cache.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
+        <state relative-caret-position="529">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
           <folding>
             <element signature="e#72#83#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dic_1/html_cache.py">
+    <entry file="file://$PROJECT_DIR$/Dic_1/mongo_download_queue.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="40" column="42" selection-start-line="40" selection-start-column="42" selection-end-line="40" selection-end-column="42" />
+        <state relative-caret-position="1628">
+          <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
           <folding>
-            <element signature="e#72#83#0" expanded="true" />
+            <element signature="e#0#40#0" expanded="true" />
+            <element signature="e#113#822#1" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dic_1/mongo_queue.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dic_1/downloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1387">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#2525#3241#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dic_1/parser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dic_1/master.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dic_1/link_crawler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Dic_1/process_crawler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -588,18 +715,18 @@
     <entry file="file://$PROJECT_DIR$/Dic_1/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dic_1/mongo_queue.py">
+    <entry file="file://$PROJECT_DIR$/Dic_1/mongo_parse_queue.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+        <state relative-caret-position="550">
+          <caret line="46" column="46" selection-start-line="46" selection-start-column="46" selection-end-line="46" selection-end-column="46" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
-            <element signature="e#105#814#1" expanded="false" />
+            <element signature="e#110#819#1" expanded="false" />
           </folding>
         </state>
       </provider>

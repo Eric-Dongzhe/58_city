@@ -1,94 +1,91 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
+import urlparse
+import urllib2
+import random
 import time
-# from multiprocessing import Process, Queue
-from Queue import Queue
-import threading
-import pymongo
-import requests
-from bs4 import BeautifulSoup
-import sqlite3
-from channel_extract import channels_string
-from url_cache import UrlCache
-from html_cache import HtmlCache
+from datetime import datetime, timedelta
+import socket
 
-client = pymongo.MongoClient('localhost', 27017)
-# html_cache = HtmlCache('channel_html')
-
-ExitFlag = 0
+DEFAULT_AGENT = 'wswp'
+DEFAULT_DELAY = 0
+DEFAULT_RETRIES = 1
+DEFAULT_TIMEOUT = 60
 
 
-class MyThread(threading.Thread):
-    def __init__(self, threadID, name, q):
-        threading.Thread.__init__(self)
-        self.threadID = threadID
-        self.name = name
-        self.q = q
+class Downloader:
+    def __init__(self, delay=DEFAULT_DELAY, user_agent=DEFAULT_AGENT, proxies=None, num_retries=DEFAULT_RETRIES,
+                 timeout=DEFAULT_TIMEOUT, opener=None, cache=None):
+        socket.setdefaulttimeout(timeout)
+        self.throttle = Throttle(delay)
+        self.user_agent = user_agent
+        self.proxies = proxies
+        self.num_retries = num_retries
+        self.opener = opener
+        self.cache = cache
 
-    def run(self):
-        print "Starting " + self.name
-        get_all_page_from(self.name, self.q)
-        print "Exiting " + self.name
+    def __call__(self, url):
+        result = None
+        if self.cache:
+            try:
+                result = self.cache[url]
+            except KeyError:
+                # url is not available in cache
+                pass
+            else:
+                if self.num_retries > 0 and 500 <= result['code'] < 600:
+                    # server error so ignore result from cache and re-download
+                    result = None
+        if result is None:
+            # result was not loaded from cache so still need to download
+            self.throttle.wait(url)
+            proxy = random.choice(self.proxies) if self.proxies else None
+            headers = {'User-agent': self.user_agent}
+            result = self.download(url, headers, proxy=proxy, num_retries=self.num_retries)
+            if self.cache:
+                # save result to cache
+                self.cache[url] = result
+        return result['html']
+
+    def download(self, url, headers, proxy, num_retries, data=None):
+        print 'Downloading:', url
+        request = urllib2.Request(url, data, headers or {})
+        opener = self.opener or urllib2.build_opener()
+        if proxy:
+            proxy_params = {urlparse.urlparse(url).scheme: proxy}
+            opener.add_handler(urllib2.ProxyHandler(proxy_params))
+        try:
+            response = opener.open(request)
+            html = response.read()
+            code = response.code
+        except Exception as e:
+            print 'Download error:', str(e)
+            html = ''
+            if hasattr(e, 'code'):
+                code = e.code
+                if num_retries > 0 and 500 <= code < 600:
+                    # retry 5XX HTTP errors
+                    return self.download(url, headers, proxy, num_retries - 1, data)
+            else:
+                code = None
+        return {'html': html, 'code': code}
 
 
-def download(channel, pages, who_sells=0):
-    list_view = '{}{}/pn{}'.format(channel, str(who_sells), str(pages))
-    wb_data = channels_string + list_view
-    html_cache = HtmlCache(channel)
-    html_cache.setitem(channel, wb_data)
-    return list_view
+class Throttle:
+    """Throttle downloading by sleeping between requests to same domain
+    """
 
+    def __init__(self, delay):
+        # amount of delay between downloads for each domain
+        self.delay = delay
+        # timestamp of when a domain was last accessed
+        self.domains = {}
 
-def put_url_to_queue(url_queue, channel__list):
-    for channel in channel_list:
-        url_queue.put(channel)
-        print('put channel Link queue size is %d' % (url_queue.qsize(),))
-
-
-def get_all_page_from(thread_name, queue):
-    while not ExitFlag:
-        # queueLock.acquire()
-        if not Channel_Queue.empty():
-            channel_for_parse = queue.get()
-            # queueLock.release()
-            for page in xrange(1, 5):
-                channel_list_url = download(channel_for_parse, page)
-                print "%s processing %s" % (thread_name, channel_list_url)
-                # Log_thread.write("----%s processing %s----\n" % (threadName, channel_list))
-        else:
-            pass  # queueLock.release()
-        # time.sleep(1)
-
-
-if __name__ == '__main__':
-    channel_list = channels_string.split()
-    threadList = ["Thread-1", "Thread-2", "Thread-3", "Thread-4", "Thread-5", "Thread-6", "Thread-7", "Thread-8"]
-    Channel_Queue = Queue(10)
-    queueLock = threading.Lock()
-    threads = []
-    threadID = 1
-
-    # 创建新线程
-    for tName in threadList:
-        thread = MyThread(threadID, tName, Channel_Queue)
-        thread.start()
-        threads.append(thread)
-        threadID += 1
-
-    # 填充队列
-    queueLock.acquire()
-    for channel_url in channel_list:
-        Channel_Queue.put(channel_url)
-    queueLock.release()
-
-    # 等待队列清空
-    while not Channel_Queue.empty():
-        pass
-
-    # 通知线程是时候退出
-    ExitFlag = 1
-
-    # 等待所有线程完成
-    for t in threads:
-        t.join()
-    print "Exiting Main Thread"
+    def wait(self, url):
+        """Delay if have accessed this domain recently
+        """
+        domain = urlparse.urlsplit(url).netloc
+        last_accessed = self.domains.get(domain)
+        if self.delay > 0 and last_accessed is not None:
+            sleep_secs = self.delay - (datetime.now() - last_accessed).seconds
+            if sleep_secs > 0:
+                time.sleep(sleep_secs)
+        self.domains[domain] = datetime.now()
