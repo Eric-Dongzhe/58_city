@@ -1,3 +1,4 @@
+
 channels_string = """
 http://nj.58.com//iphonesj/
 http://nj.58.com//sanxing/
@@ -320,3 +321,5 @@ http://nj.58.com//canjirenyongpin/
 http://nj.58.com//weixing/
 http://nj.58.com//qitatiaozao/
 """
+
+channels_list = channels_string.split()

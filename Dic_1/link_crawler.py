@@ -2,7 +2,6 @@ import time
 import urlparse
 import threading
 import multiprocessing
-from mongo_cache import MongoCache
 from mongo_download_queue import MongoDownloadQueue
 from downloader import Downloader
 
@@ -13,7 +12,7 @@ def threaded_crawler(seed_url, delay=5, cache=None, scrape_callback=None, user_a
     """Crawl using multiple threads
     """
     # the queue of URL's that still need to be crawled
-    crawl_queue = MongoQueue()
+    crawl_queue = MongoDownloadQueue()
     crawl_queue.clear()
     crawl_queue.push(seed_url)
     D = Downloader(cache=cache, delay=delay, user_agent=user_agent, proxies=proxies, num_retries=num_retries, timeout=timeout)
