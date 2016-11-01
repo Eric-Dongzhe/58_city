@@ -4,24 +4,16 @@ import time
 # from multiprocessing import Process, Queue
 from Queue import Queue
 import threading
-from mongo_cache import MongoCache
 import pymongo
 import requests
 from bs4 import BeautifulSoup
 import sqlite3
 from channel_extract import channels_string
-
-
+from url_cache import UrlCache
+from html_cache import HtmlCache
 
 client = pymongo.MongoClient('localhost', 27017)
-DB_URL = client['DB_URL']  # Database
-url_list = DB_URL['channel_link']  # Table url_list
-
-DB_Cache = client['DB_Cache']
-channel_page = DB_Cache['channel_page']
-
-
-
+# html_cache = HtmlCache('channel_html')
 
 ExitFlag = 0
 
@@ -41,12 +33,9 @@ class MyThread(threading.Thread):
 
 def download(channel, pages, who_sells=0):
     list_view = '{}{}/pn{}'.format(channel, str(who_sells), str(pages))
-    wb_data = requests.get(list_view)
-    record = {'result': Binary(zlib.compress(pickle.dumps(wb_data))),
-              'channel': channel,
-              'timestamp': datetime.utcnow()
-              }
-    channel_page.update({'_id': list_view}, {'$set': record}, upsert=True)
+    wb_data = channels_string + list_view
+    html_cache = HtmlCache(channel)
+    html_cache.setitem(channel, wb_data)
     return list_view
 
 

@@ -29,22 +29,16 @@ class UrlCache:
     KeyError: 'http://example.webscraping.com does not exist'
     """
 
-    def __init__(self, db_url='url_cache', client=None, expires=timedelta(days=7)):
-        """
-        client: mongo database client
-        expires: timedelta of amount of time before a cache entry is considered expired
-        """
-        # if a client object is not passed
-        # then try connecting to mongodb at the default localhost port
+    def __init__(self, tab_name, client=None, expires=timedelta(minutes=60)):
+
         self.client = MongoClient('localhost', 27017) if client is None else client
-        # create collection to store cached webpages,
-        # which is the equivalent of a table in a relational database
-        self.db = self.client[db_url]
-        self.db.webpage.create_index('timestamp', expireAfterSeconds=expires.total_seconds())
+        self.db_url = self.client.url_cache
+        self.tab_name = tab_name
+        self.db_url[self.tab_name].create_index('timestamp', expireAfterSeconds=expires.total_seconds())
 
     def contains(self, url):
         try:
-            self[url]
+            self.getitem(url)
         except KeyError:
             return False
         else:
@@ -53,19 +47,19 @@ class UrlCache:
     def getitem(self, url):
         """Load value at this URL
         """
-        record = self.db.webpage.find_one({'_id': url})
+        record = self.db_url[self.tab_name].find_one({'_id': url})
         if record:
-            # return record['result']
-            return pickle.loads(zlib.decompress(record['result']))
+            return record['result']
+            # return pickle.loads(zlib.decompress(record['result']))
         else:
             raise KeyError(url + ' does not exist')
 
-    def setitem(self, url, result):
+    def setitem(self, url, name):
         """Save value for this URL
         """
-        # record = {'result': result, 'timestamp': datetime.utcnow()}
-        record = {'result': Binary(zlib.compress(pickle.dumps(result))), 'timestamp': datetime.utcnow()}
-        self.db.webpage.update({'_id': url}, {'$set': record}, upsert=True)
+        record = {'result': name, 'timestamp': datetime.utcnow()}
+        # record = {'result': Binary(zlib.compress(pickle.dumps(result))), 'timestamp': datetime.utcnow()}
+        self.db_url[self.tab_name].update({'_id': url}, {'$set': record}, upsert=True)
 
     def clear(self):
-        self.db.webpage.drop()
+        self.db_url[self.tab_name].drop()
