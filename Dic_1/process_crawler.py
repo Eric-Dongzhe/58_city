@@ -13,16 +13,16 @@ def threaded_crawler(seed_url, delay=5, cache=None, scrape_callback=None, user_a
     """Crawl using multiple threads
     """
     # the queue of URL's that still need to be crawled
-    crawl_queue = MongoDownloadQueue()
-    crawl_queue.clear()
-    crawl_queue.push(seed_url)
+    channel_page_download_queue = MongoDownloadQueue()
+    channel_page_download_queue.clear()
+    channel_page_download_queue.push(seed_url)
     D = Downloader(cache=cache, delay=delay, user_agent=user_agent, proxies=proxies, num_retries=num_retries, timeout=timeout)
 
     def process_queue():
         while True:
             # keep track that are processing url
             try:
-                url = crawl_queue.pop()
+                channel_url = channel_page_download_queue.pop()
             except KeyError:
                 # currently no urls to process
                 break
@@ -37,7 +37,7 @@ def threaded_crawler(seed_url, delay=5, cache=None, scrape_callback=None, user_a
                         for link in links:
                             # add this new link to queue
                             crawl_queue.push(normalize(seed_url, link))
-                crawl_queue.complete(url)
+                channel_page_download_queue.complete(url)
 
     # wait for all download threads to finish
     threads = []

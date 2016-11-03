@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 try:
     import cPickle as pickle
 except ImportError:
@@ -17,43 +19,44 @@ class HtmlCache:
     >>> url = 'http://example.webscraping.com/channel_page/'
             'http://example.webscraping.com/item_page/'
     >>> result = {'html': '...'}
-    >>> cache.setitem(url,result)
-    >>> cache.getitem(url) == result['html']
+    >>> cache[url] = result
+    >>> cache[url]['html'] == result['html']
     True
-    >>> cache = HtmlCache(exp_time=1seconds)
-    >>> cache.setitem(url, result)
+    >>> cache = HtmlCache(exp_time=1)
+    >>> cache[url] = result
     >>> # every 60 seconds is purged http://docs.mongodb.org/manual/core/index-ttl/
     >>> import time; time.sleep(60)
-    >>> cache.getitem(url)
+    >>> cache[url]
     Traceback (most recent call last):
      ...
     KeyError: 'http://example.webscraping.com does not exist'
     """
 
-    def __init__(self, tab_name, client=None, exp_time=7, compress=False):
+    def __init__(self, cache_tab_name, client=None, exp_time=7, compress=False):
         """
         client: mongo database client
         expires: timedelta of amount of time before a cache entry is considered expired
         """
         self.client = MongoClient('localhost', 27017) if client is None else client
         self.db_html = self.client.html_cache
-        self.tab_name = tab_name
+        self.cache_tab = self.db_html[cache_tab_name]
         expires = timedelta(days=exp_time)
-        self.db_html[self.tab_name].create_index('timestamp', expireAfterSeconds=expires.total_seconds())
+        self.cache_tab.create_index('timestamp', expireAfterSeconds=expires.total_seconds())
         self.compress = compress
 
-    def contains(self, url):
+    def __contains__(self, url):
         try:
-            self.getitem(url)
+            # self.getitem(url)
+            self[url]
         except KeyError:
             return False
         else:
             return True
 
-    def getitem(self, url):
+    def __getitem__(self, url):
         """Load value at this URL
         """
-        record = self.db_html[self.tab_name].find_one({'_id': url})
+        record = self.cache_tab.find_one({'_id': url})
         if record:
             if self.compress:
                 return pickle.loads(zlib.decompress(record['result']))
@@ -62,7 +65,7 @@ class HtmlCache:
         else:
             raise KeyError(url + ' does not exist')
 
-    def setitem(self, url, result):
+    def __setitem__(self, url, result):
         """Save value for this URL
         """
         if self.compress:
@@ -70,7 +73,7 @@ class HtmlCache:
         else:
             record = {'result': result, 'timestamp': datetime.utcnow()}
 
-        self.db_html[self.tab_name].update({'_id': url}, {'$set': record}, upsert=True)
+        self.cache_tab.update({'_id': url}, {'$set': record}, upsert=True)
 
     def clear(self):
-        self.db_html[self.tab_name].drop()
+        self.cache_tab.drop()

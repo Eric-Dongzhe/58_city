@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 
-from link_crawler import link_crawler
-from url_cache import UrlCache
+from thread_download import threaded_download
+from html_cache import HtmlCache
 from channel_extract import channels_list
 
+channel = ['http://example.webscraping.com/index/',
+           'http://tieba.baidu.com/f/index/forumpark?cn=%E5%8F%B0%E6%B9%BE%E7%94%B5%E5%BD%B1&ci=0&pcn=%E7%94%B5%E5%BD%B1&pci=0&ct=1&rn=20&pn=']
 
 def main():
-    scrape_callback = channels_list
-    cache = UrlCache('channels_url')
+    # scrape_callback = AlexaCallback()
+    html_cache = HtmlCache('ChannelPage_Cache')
     # cache.clear()
-    # process_crawler(scrape_callback.seed_url, scrape_callback=scrape_callback, cache=cache, timeout=10, ignore_robots=True)
-    link_crawler(None, scrape_callback=scrape_callback, cache=cache, timeout=10, ignore_robots=True)
+    channels_for_crawl = channel
+
+    threaded_download(channels_for_crawl, cache=html_cache)
+
 
 if __name__ == '__main__':
+
     main()
-
-
-
-

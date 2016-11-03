@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 import urlparse
 import urllib2
 import random
@@ -8,7 +10,7 @@ import socket
 DEFAULT_AGENT = 'wswp'
 DEFAULT_DELAY = 0
 DEFAULT_RETRIES = 1
-DEFAULT_TIMEOUT = 60
+DEFAULT_TIMEOUT = 0
 
 
 class Downloader:
@@ -57,7 +59,7 @@ class Downloader:
             html = response.read()
             code = response.code
         except Exception as e:
-            print 'Download error:', str(e)
+            print 'Download error:', str(e) + url
             html = ''
             if hasattr(e, 'code'):
                 code = e.code
@@ -70,13 +72,13 @@ class Downloader:
 
 
 class Throttle:
-    """Throttle downloading by sleeping between requests to same domain
+    """通过间隔时间来限制对同一domain的下载
     """
 
     def __init__(self, delay):
-        # amount of delay between downloads for each domain
+        # 对每个domain的下载的间隔时间
         self.delay = delay
-        # timestamp of when a domain was last accessed
+        # 对最近被请求过的domian打上时间戳
         self.domains = {}
 
     def wait(self, url):
@@ -87,5 +89,7 @@ class Throttle:
         if self.delay > 0 and last_accessed is not None:
             sleep_secs = self.delay - (datetime.now() - last_accessed).seconds
             if sleep_secs > 0:
+                # domain 最近已经被请求过，所以需要sleep
                 time.sleep(sleep_secs)
+        # 更新最新的请求时间
         self.domains[domain] = datetime.now()

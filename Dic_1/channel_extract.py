@@ -1,4 +1,3 @@
-
 channels_string = """
 http://nj.58.com//iphonesj/
 http://nj.58.com//sanxing/
