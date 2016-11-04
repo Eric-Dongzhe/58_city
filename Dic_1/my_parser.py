@@ -9,7 +9,7 @@ class ChannelPageParser:
 
     def __call__(self):
         """"""
-        soup = BeautifulSoup(self.html.text, 'lxml')
+        soup = BeautifulSoup(self.html, 'lxml')
         links = []
         try:
             links_nodes = soup.find_all("td", class_="t")
@@ -31,7 +31,7 @@ class ChannelPageParser:
 
     def get_data(self):
         """"""
-        soup = BeautifulSoup(self.html.text, 'lxml')
+        soup = BeautifulSoup(self.html, 'lxml')
         result = []
         title_nodes = soup.select('td.t > a')
 

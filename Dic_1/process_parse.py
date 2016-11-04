@@ -3,44 +3,52 @@
 
 import multiprocessing
 
+from store import MongoStore
 from mongo_parse_queue import MongoParseQueue
 from mongo_download_queue import MongoDownloadQueue
 from my_parser import ChannelPageParser
 
 
-def parse(parse_queue=None, store=None, queue_to_put=None):
+def parse():
     """Crawl this website in multiple threads
     """
-    # the queue of URL's that still need to be crawled
-    # channel_page_download_queue.clear()
-    # channel_page_parse_queue = MongoParseQueue('Ch_Page_P_Queue')
+    channel_page_parse_queue = MongoParseQueue('ChPage_Parse_Queue')
+    store = MongoStore('Item_Result_Data')
+    queue_to_put = MongoDownloadQueue('IPage_Download_Queue')
 
     while True:
         try:
-            channel_page = parse_queue.pop()
+            channel_page = channel_page_parse_queue.pop()
         except KeyError:
             # crawl queue is empty
             break
         else:
             channel_page_parser = ChannelPageParser(channel_page[1])
+
             items_url = channel_page_parser()
             items_simple_data = channel_page_parser.get_data()
-            for url in items_url:
-                if url:
-                    queue_to_put.push(url)
+            print items_simple_data
             if store:
-                store(items_url, items_simple_data)
-            parse_queue.complete(channel_page[0])
+                for url, item_data in zip(items_url, items_simple_data):
+                    if url:
+                        queue_to_put.push(url)
+                    store[url] = item_data
+            else:
+                for url in items_url:
+                    queue_to_put.push(url)
+            # store[url] = items_simple_data
+            # store(items_url, items_simple_data)
+            channel_page_parse_queue.complete(channel_page[0])
 
 
-def process_parse(**kwargs):
-    # channel_page_parse_queue = MongoParseQueue('Ch_Page_P_Queue')
+def process_parse():
+    # channel_page_parse_queue = MongoParseQueue('ChPage_Parse_Queue')
     num_cpus = multiprocessing.cpu_count()
     # pool = multiprocessing.Pool(processes=num_cpus)
     print 'Starting {} processes'.format(num_cpus)
     processes = []
     for i in range(num_cpus):
-        p = multiprocessing.Process(target=parse, kwargs=kwargs)
+        p = multiprocessing.Process(target=parse)
         # parsed = pool.apply_async(threaded_link_crawler, args, kwargs)
         p.start()
         processes.append(p)
