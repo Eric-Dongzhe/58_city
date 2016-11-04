@@ -9,18 +9,22 @@ from mongo_download_queue import MongoDownloadQueue
 from my_parser import ChannelPageParser
 
 
+parse_queue_name = 'ChPage_Parse_Queue'
+store_name = 'Item_Result_Data'
+queue_to_put_name = 'IPage_Download_Queue'
+
+
 def parse():
     """Crawl this website in multiple threads
     """
-    channel_page_parse_queue = MongoParseQueue('ChPage_Parse_Queue')
-    store = MongoStore('Item_Result_Data')
-    queue_to_put = MongoDownloadQueue('IPage_Download_Queue')
-
+    parse_queue = MongoParseQueue(parse_queue_name)
+    store = MongoStore(store_name)
+    queue_to_put = MongoDownloadQueue(queue_to_put_name)
     while True:
         try:
-            channel_page = channel_page_parse_queue.pop()
+            channel_page = parse_queue.pop()
         except KeyError:
-            # crawl queue is empty
+            print 'crawl queue is empty'
             break
         else:
             channel_page_parser = ChannelPageParser(channel_page[1])
@@ -38,7 +42,7 @@ def parse():
                     queue_to_put.push(url)
             # store[url] = items_simple_data
             # store(items_url, items_simple_data)
-            channel_page_parse_queue.complete(channel_page[0])
+            parse_queue.complete(channel_page[0])
 
 
 def process_parse():
@@ -48,6 +52,7 @@ def process_parse():
     print 'Starting {} processes'.format(num_cpus)
     processes = []
     for i in range(num_cpus):
+        # p = multiprocessing.Process(target=parse)
         p = multiprocessing.Process(target=parse)
         # parsed = pool.apply_async(threaded_link_crawler, args, kwargs)
         p.start()
@@ -55,4 +60,3 @@ def process_parse():
     # wait for processes to complete
     for p in processes:
         p.join()
-
