@@ -10,22 +10,22 @@ from downloader import Downloader
 SLEEP_TIME = 1
 
 
-def threaded_download(seed_url, delay=5, cache=None, user_agent='wswp', proxies=None, num_retries=2, max_threads=2, timeout=10):
+def threaded_download(seed_url, delay=5, cache=None, user_agent='wswp', proxies=None, num_retries=2, max_threads=8, timeout=10):
     """Crawl this website in multiple threads
     """
     # the queue of URL's that still need to be crawled
-    channel_page_download_queue = MongoDownloadQueue('Ch_PageDownload_Queue')
-    channel_page_download_queue.clear()
+    channel_page_download_queue = MongoDownloadQueue('ChPage_Download_Queue')
+    # channel_page_download_queue.clear()
     channel_page_download_queue.push(seed_url)
     downloader = Downloader(cache=cache, delay=delay, user_agent=user_agent, proxies=proxies, num_retries=num_retries, timeout=timeout)
 
-    channel_page_parse_queue = MongoParseQueue('Ch_Page_P_Queue')
+    channel_page_parse_queue = MongoParseQueue('ChPage_Parse_Queue')
 
     def process_queue():
         while True:
             try:
                 channel_url = channel_page_download_queue.pop()
-                print 'pooooped'
+
             except KeyError:
                 # crawl queue is empty
                 break
@@ -74,7 +74,7 @@ def threaded_download(seed_url, delay=5, cache=None, user_agent='wswp', proxies=
 def page_controller(channel, page_num):
     pages = []
     for page in range(1, page_num + 1):
-        view_list = '{}{}'.format(channel, page)
+        view_list = '{}pn{}'.format(channel, page)
         # view_list = urlparse.urljoin(channel, str(page))
         pages.append(view_list)
     return pages

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from datetime import datetime, timedelta
 from pymongo import MongoClient, errors
 
@@ -65,7 +67,7 @@ class MongoParseQueue:
             update={'$set': {'status': self.PROCESSING, 'timestamp': datetime.now()}}
         )
         if record:
-            return record['html']
+            return record['_id'], record['html']
         else:
             self.repair()
             raise KeyError()

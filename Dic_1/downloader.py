@@ -74,7 +74,6 @@ class Downloader:
 class Throttle:
     """通过间隔时间来限制对同一domain的下载
     """
-
     def __init__(self, delay):
         # 对每个domain的下载的间隔时间
         self.delay = delay
