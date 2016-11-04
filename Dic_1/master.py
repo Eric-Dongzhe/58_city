@@ -2,7 +2,6 @@
 
 from thread_download import threaded_download
 from html_cache import HtmlCache
-
 from channel_extract import channels_list
 
 channel_string = """http://nj.58.com//iphonesj/
@@ -19,12 +18,15 @@ http://nj.58.com//lianxiang/
 http://nj.58.com//motuoluola/
 http://nj.58.com//heimei/
 http://nj.58.com//jinlisj/
-http://nj.58.com//meizu/"""
-channel = channel_string.split()
+http://nj.58.com//meizu/
+"""
+
+# 选择 [Channels]
+channel = channel_string.split()[0:1]
 
 
 def main():
-    # scrape_callback = AlexaCallback()
+
     html_cache = HtmlCache('ChPage_Cache')
     channels_for_crawl = channel
 

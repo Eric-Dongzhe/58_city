@@ -10,7 +10,6 @@ from downloader import Downloader
 
 SLEEP_TIME = 1
 
-
 def threaded_download(seed_url, delay=5, cache=None, user_agent='wswp', proxies=None, num_retries=2, max_threads=8, timeout=10):
     """Crawl this website in multiple threads
     """

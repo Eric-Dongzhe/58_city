@@ -9,8 +9,8 @@ from mongo_download_queue import MongoDownloadQueue
 from my_parser import ChannelPageParser
 
 
+data_store = 'Data_Store'
 parse_queue_name = 'ChPage_Parse_Queue'
-store_name = 'Item_Result_Data'
 queue_to_put_name = 'IPage_Download_Queue'
 
 
@@ -18,7 +18,7 @@ def parse():
     """Crawl this website in multiple threads
     """
     parse_queue = MongoParseQueue(parse_queue_name)
-    store = MongoStore(store_name)
+    store = MongoStore(data_store)
     queue_to_put = MongoDownloadQueue(queue_to_put_name)
     while True:
         try:
@@ -31,15 +31,17 @@ def parse():
 
             items_url = channel_page_parser()
             items_simple_data = channel_page_parser.get_data()
-            print items_simple_data
+            # print len(items_url)
+            # print len(items_simple_data)
+            urls = [url for url in items_url if url is not None]
+            print urls
+            queue_to_put.push(urls)
             if store:
                 for url, item_data in zip(items_url, items_simple_data):
-                    if url:
-                        queue_to_put.push(url)
                     store[url] = item_data
-            else:
-                for url in items_url:
-                    queue_to_put.push(url)
+            # else:
+            #     for url in items_url:
+            #         queue_to_put.push(url)
             # store[url] = items_simple_data
             # store(items_url, items_simple_data)
             parse_queue.complete(channel_page[0])
