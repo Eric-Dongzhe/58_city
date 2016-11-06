@@ -22,12 +22,12 @@ http://nj.58.com//meizu/
 """
 
 # 选择 [Channels]
-channel = channel_string.split()[0:1]
+channel = channels_list
 
 
 def main():
 
-    html_cache = HtmlCache('ChPage_Cache')
+    html_cache = HtmlCache('ChPage_Cache', compress=True)
     channels_for_crawl = channel
 
     threaded_download(channels_for_crawl, cache=html_cache)

@@ -6,9 +6,12 @@ import threading
 import urlparse
 from mongo_parse_queue import MongoParseQueue
 from mongo_download_queue import MongoDownloadQueue
-from downloader import Downloader
+# from downloader import Downloader
+from fast_downloader import Downloader
+
 
 SLEEP_TIME = 1
+
 
 def threaded_download(seed_url, delay=5, cache=None, user_agent='wswp', proxies=None, num_retries=2, max_threads=8, timeout=10):
     """Crawl this website in multiple threads
@@ -30,7 +33,7 @@ def threaded_download(seed_url, delay=5, cache=None, user_agent='wswp', proxies=
                 # crawl queue is empty
                 break
             else:
-                for page_url in page_controller(channel=channel_url, page_num=5):  # get all pages of a channel
+                for page_url in page_controller(channel=channel_url, page_num=20):  # get all pages of a channel
                     html = downloader(page_url)
                     if html:
                         channel_page_parse_queue.push(page_url, html)

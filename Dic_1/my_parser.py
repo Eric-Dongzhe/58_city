@@ -34,9 +34,11 @@ class ChannelPageParser:
         soup = BeautifulSoup(self.html, 'lxml')
         result = []
         title_nodes = soup.select('td.t > a')
+        price_nodes = soup.select('span.price')
 
-        for title in title_nodes:
+        for title, price in zip(title_nodes, price_nodes):
             # put these datas in a dic respectly
-            res_data = {'title': title.get_text()}
+            res_data = {'title': title.get_text(),
+                        'price': price.get_text()}
             result.append(res_data)
         return result
