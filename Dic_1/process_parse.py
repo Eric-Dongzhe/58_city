@@ -9,7 +9,7 @@ from mongo_download_queue import MongoDownloadQueue
 from my_lxml_parser import ChannelPageParser
 
 
-data_store = 'Data_Store'
+data_store = 'Data_Result'
 parse_queue_name = 'ChPage_Parse_Queue'
 queue_to_put_name = 'IPage_Download_Queue'
 
@@ -31,14 +31,15 @@ def parse():
 
             items_url = channel_page_parser()
             items_simple_data = channel_page_parser.get_data()
-            # print len(items_url)
-            # print len(items_simple_data)
             urls = [url for url in items_url if url is not None]
-            print urls
-            queue_to_put.push(urls)
-            if store:
-                for url, item_data in zip(items_url, items_simple_data):
-                    store[url] = item_data
+            if urls:
+                # print urls
+                queue_to_put.push(urls)
+
+            for url, item_data in zip(items_url, items_simple_data):
+                # print url
+                store[url] = item_data
+                print url, item_data
             # else:
             #     for url in items_url:
             #         queue_to_put.push(url)

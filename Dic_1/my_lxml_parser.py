@@ -15,10 +15,10 @@ class ChannelPageParser:
             links_nodes = tree.xpath("//td[@class='t']")
             for url in links_nodes:
                 try:
-                    link = url.xpath("a/@href")
+                    link = url.xpath("a/@href")[0]
                 except:
                     link = None
-                links.append(link[0])
+                links.append(link)
         except:
             links = None
         return links
@@ -27,7 +27,7 @@ class ChannelPageParser:
         """"""
         tree = etree.HTML(self.html)
         result = []
-        nodes = tree.xpath("tr[@class]")
+        nodes = tree.xpath("//tr[@class]")
 
         for node in nodes:
             res_data = {'title': node.xpath("td[@class='t']/a/text()"),
@@ -35,7 +35,7 @@ class ChannelPageParser:
                         # 'price': node.xpath("//span[@class='price']/text()"),
                         'location': node.xpath("td[@class='t']/span[@class='fl']/span/text()"),
                         'img': node.xpath("td[@class='img']/a/@href"),
-                        'link': node.xpath("td[@class='t']/a/@href"),
+                        # 'link': node.xpath("td[@class='t']/a/@href"),
                         }
             result.append(res_data)
         return result

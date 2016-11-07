@@ -33,7 +33,7 @@ def threaded_download(seed_url, delay=5, cache=None, user_agent='wswp', proxies=
                 # crawl queue is empty
                 break
             else:
-                for page_url in page_controller(channel=channel_url, page_num=20):  # get all pages of a channel
+                for page_url in page_controller(channel=channel_url, page_num=5):  # get all pages of a channel
                     html = downloader(page_url)
                     if html:
                         channel_page_parse_queue.push(page_url, html)

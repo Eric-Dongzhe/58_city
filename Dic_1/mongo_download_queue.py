@@ -6,26 +6,7 @@ from pymongo import MongoClient, errors
 
 class MongoDownloadQueue:
     """
-    >>> timeout = 1
-    >>> url = 'http://example.webscraping.com'
-    >>> q = MongoQueue(timeout=timeout)
-    >>> q.clear() # ensure empty queue
-    >>> q.push(url) # add test URL
-    >>> q.peek() == q.pop() == url # pop back this URL
-    True
-    >>> q.repair() # immediate repair will do nothin
-    >>> q.pop() # another pop should be empty
-    >>> q.peek()
-    >>> import time; time.sleep(timeout) # wait for timeout
-    >>> q.repair() # now repair will release URL
-    Released: test
-    >>> q.pop() == url # pop URL again
-    True
-    >>> bool(q) # queue is still active while outstanding
-    True
-    >>> q.complete(url) # complete this URL
-    >>> bool(q) # queue is not complete
-    False
+
     """
 
     # possible states of a download

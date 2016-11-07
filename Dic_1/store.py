@@ -5,7 +5,7 @@ try:
 except ImportError:
     import pickle
 import zlib
-from datetime import datetime, timedelta
+from datetime import datetime
 from pymongo import MongoClient
 from bson.binary import Binary
 
@@ -37,7 +37,7 @@ class MongoStore:
         expires: timedelta of amount of time before a cache entry is considered expired
         """
         self.client = MongoClient('localhost', 27017) if client is None else client
-        self.db_html = self.client.DataStored
+        self.db_html = self.client['DataStored']
         self.store_tab = self.db_html[store_tab_name]
         # expires = timedelta(days=exp_time)
         # self.cache_tab.create_index('timestamp', expireAfterSeconds=expires.total_seconds())
