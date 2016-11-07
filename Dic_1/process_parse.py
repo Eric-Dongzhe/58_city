@@ -6,7 +6,7 @@ import multiprocessing
 from store import MongoStore
 from mongo_parse_queue import MongoParseQueue
 from mongo_download_queue import MongoDownloadQueue
-from my_parser import ChannelPageParser
+from my_lxml_parser import ChannelPageParser
 
 
 data_store = 'Data_Store'

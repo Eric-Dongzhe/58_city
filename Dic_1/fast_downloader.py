@@ -1,10 +1,7 @@
 # encoding: utf-8
 
 import requests
-
-
 import urlparse
-import urllib2
 import random
 import time
 from datetime import datetime, timedelta
